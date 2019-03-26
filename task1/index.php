@@ -16,7 +16,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
 	}
 }
 echo "<pre>";
-getFilesInfo();
+echo getFilesInfo();
 echo "</pre>";
 
 

@@ -47,7 +47,17 @@ function charsetFileNameToUTF8($filename)
 function getFilesInfo ()
 {
 	$filesInfo = [];
-	$fileList = scandir(DIR_PATH);
+	if (is_dir(test))
+	{
+		$fileList = scandir(test);
+	} else {
+		return "Folder does not exist.";
+	}
+
+	if (empty($fileList))
+	{
+		return "There's no files there";
+	}
 
 	/** Adding file names **/
 	foreach ($fileList as $value) 
