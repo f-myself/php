@@ -15,9 +15,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
 		$statusMessage = checkErrorUpload($_FILES['upload']['error']);
 	}
 }
-echo "<pre>";
-echo getFilesInfo();
-echo "</pre>";
 
 
 include "templates/index.php";
