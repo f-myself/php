@@ -1,0 +1,2 @@
+grep -rl '<?php eval(.*)));?>' ./ | xargs sed -i 's/<?php eval(.*)));?>/ /g'
+grep -rl '<?php eval(.*'
