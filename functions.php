@@ -44,17 +44,22 @@ function charsetFileNameToUTF8($filename)
 	return mb_convert_encoding($filename, CH_UTF8, CH_SYS);
 }
 
-function getFileList ()
+function getFilesInfo ()
 {
-	$filelist = scandir(DIR_PATH);
-	foreach ($filelist as $key => $value) {
-		if ($value == "." or $value == "..")
+	$filesInfo = [];
+	$fileList = scandir(DIR_PATH);
+
+	/** Adding file names **/
+	foreach ($fileList as $value) 
+	{
+		if ($value != "." and $value != "..")
 		{
-			unset($filelist[$value]);
-			echo $value . " is unseted";
+			array_push($filesInfo, array("name" => charsetFileNameToUTF8($value)));
 		}
 	}
-	echo "<pre>";
-	print_r($filelist);
-	echo "</pre>";
+
+	/** Adding file sizes **/
+
+	
+	
 }
