@@ -16,5 +16,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
 	}
 }
 
+phpinfo();
+
 
 include "templates/index.php";

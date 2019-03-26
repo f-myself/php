@@ -70,7 +70,5 @@ function getFilesInfo ()
 
 	print_r($filesInfo);
 	/** Adding file sizes **/
-
-	
 	
 }
