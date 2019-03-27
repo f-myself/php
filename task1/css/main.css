@@ -2,3 +2,20 @@
 	display: block;
 	margin-top: 20px;
 }
+
+.filesTable,
+.filesTable td {
+	border-collapse: collapse;
+	border: 1px solid #000000;
+	vertical-align: middle;
+	padding: 5px;
+	min-width: 150px;
+}
+
+.table {
+	padding: 20px;
+}
+
+thead {
+	font-weight: 700;
+}

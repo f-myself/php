@@ -13,3 +13,10 @@ define("ERR_NO_FILE", "Please choose file to upload.");
 define("ERR_NO_TMP_DIR", "Cannot upload file on server! Contact with admin.");
 define("ERR_DISK_WRITE", "Cannot write file on disk. Please, contact with admin");
 /** End of messages for file uploads **/
+
+/** Messages for get files **/
+define("ERR_NO_FOLDER", "Folder does not exist.");
+define("ERR_EMPTY_FOLDER", "There's no files in folder");
+define("OK_DELETED", "File was deleted");
+define("ERR_DELETED", "File was not deleted");
+/** End of messages for file uploads **/

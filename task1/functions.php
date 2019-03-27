@@ -44,31 +44,50 @@ function charsetFileNameToUTF8($filename)
 	return mb_convert_encoding($filename, CH_UTF8, CH_SYS);
 }
 
+function checkSize ($size)
+{
+	switch ($size) {
+		case $size <= 1000:
+			return $size . " Bytes";
+			break;
+		
+		case $size > 1000 and $size <= 1000000:
+			return round($size / 1000, 2) . " KB";
+			break;
+
+		case $size > 1000000:
+			return round($size / 1000000, 2) . " MB";
+			break;
+	}
+}
+
 function getFilesInfo ()
 {
 	$filesInfo = [];
+
 	if (is_dir(DIR_PATH))
 	{
 		$fileList = scandir(DIR_PATH);
-	} else {
-		return "Folder does not exist.";
-	}
-
-	if (empty($fileList))
+	} 
+	else 
 	{
-		return "There's no files there";
+		return ERR_NO_FOLDER;
 	}
 
-	/** Adding file names **/
+	/** Adding file params **/
 	foreach ($fileList as $value) 
 	{
 		if ($value != "." and $value != "..")
 		{
-			array_push($filesInfo, array("name" => charsetFileNameToUTF8($value)));
+			array_push($filesInfo, array(
+				"name" => $value, 
+				"size" => checkSize(filesize(DIR_PATH . $value)), 
+				"path" => DIR_PATH . $value));
 		}
 	}
-
-	print_r($filesInfo);
-	/** Adding file sizes **/
-	
+	if (empty($filesInfo))
+	{
+		return ERR_EMPTY_FOLDER;
+	}
+	return $filesInfo;
 }
