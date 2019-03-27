@@ -8,7 +8,7 @@ $tableStatus = NULL;
 
 if($_SERVER['REQUEST_METHOD'] == "POST")
 {
-	if ($_FILES['ulpoad'])
+	if ($_FILES)
 	{
 		if(move_uploaded_file($_FILES['upload']['tmp_name'], DIR_PATH . charsetFileNameToSys(basename($_FILES['upload']['name']))))
 		{
