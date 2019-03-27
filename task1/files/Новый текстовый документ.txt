@@ -1,5 +1,0 @@
-https://www.ru.advertisercommunity.com/t5/Stati/Sobytiya-i-virtualnye-stranitsy-v-Google-Analytics/ba-p/61013#
-
-onClick="_gaq.push(['_trackEvent', 'Knopka', 'Callback']);"
-
-<div class="t330__blockbutton"> <button type="submit" class="t330__submit t-submit" style="color:#ffffff;background-color:#0193cf;">Отправить</button> </div>
