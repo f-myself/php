@@ -25,9 +25,7 @@ class Cookies implements iWorkData
     {
         if ($key and isset($_COOKIE[$key]))
         {
-                unset($_COOKIE[$key]);
-                setcookie('Hello', null, -1, '/');
-                return true;
+            unset($_COOKIE[$key]);
             return true;
         }
         return false;

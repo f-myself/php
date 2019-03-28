@@ -1,25 +1,43 @@
 <?php
 
+include "config.php";
 include "iWorkData.php";
 include "Session.php";
 include "Cookies.php";
+include "IniFile.php";
 include "functions.php";
 
 $ses = new Session;
 $coo = new Cookies;
+$ini = new IniFile;
 
-if (saveData($coo, 'CooName', 'CooValue'))
+if (saveData($ini, 'new', 'google'))
 {
-    echo "Cookie saved\n";
+    echo "Input success\n";
 } else {
-    echo "C not set\n";
+    echo "INI not set\n";
 }
 
-if ($data = getData($coo, 'CooName'))
+if ($data = getData($ini, 'new'))
 {
-    
+    echo $data . "\n"; 
+} else {
+	echo "Something wrong";
 }
 
+if (deleteData($ini, 'new'))
+{
+    echo "Cookie deleted\n";
+} else {
+	echo "Not deleted";
+}
+
+if ($data = getData($ini, 'new'))
+{
+    echo $data . "\n";
+} else {
+	echo "Something wrong";
+}
 
 
 
