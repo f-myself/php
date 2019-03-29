@@ -1,0 +1,17 @@
+form span {
+    display: block;
+}
+label {
+    display: block;
+    padding: 5 0px;
+}
+
+textarea {
+    height: 150px;
+}
+
+form input,
+form select,
+form textarea {
+    width: 300px;
+}

@@ -39,7 +39,4 @@ if ($data = getData($ini, 'new'))
 	echo "Something wrong";
 }
 
-
-
-
 include "templates/index.php";
