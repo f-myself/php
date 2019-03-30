@@ -45,14 +45,27 @@ if (!$mem = $calc -> getMemory())
 	$mem = ERR_MEMSET;
 }
 
+if (!$memPlusRes = $calc -> memoryPlus(25))
+{
+	$memPlusRes = ERR_MEMPLUS;
+}
+
+if (!$memMinusRes = $calc -> memoryMinus(34))
+{
+	$memMinusRes = ERR_MEMMINUS;
+}
+
+
+
 // Geting results of simple operations
 $sumRes 	= $calc -> sum();
 $subRes 	= $calc -> substract();
 $multRes 	= $calc -> multiply();
-$divRes 	= $calc -> division();
+$divRes 	= round($calc -> division(), 2);
 
 // Get results for one num operations: provide $num1
 $convertRes	= $calc -> numConvert();
+$convertRes2 = $calc -> numConvert();
 $sqRootRes	= $calc -> squareRoot();
 $percentRes	= $calc -> getPercent(25); // 25 - how much % from $num1
 $oneDivRes	= $calc -> oneDivide();

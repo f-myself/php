@@ -14,6 +14,8 @@ define("OK_MEMSET", "Memory is setted: ");
 
 /** Error messages for memory **/
 define("ERR_MEMSET", "Memory is not set. ");
+define("ERR_MEMPLUS", "Bad argument for adding.");
+define("ERR_MEMMINUS", "Bad argument for substracting.");
 
 
 /** Error messages for simple operations **/

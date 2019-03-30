@@ -94,15 +94,14 @@ class Calculator
     public function memoryClear()
     {
         $this->memory = NULL;
-        return true;
+        return "Cleared";
     }
 
     public function memoryPlus($val)
     {
         if ($this->memory and is_numeric($val))
         {
-            $this->memory += $val;
-            return true;
+            return $this->memory += $val;
         }
         return false;
     }
@@ -111,8 +110,7 @@ class Calculator
     {
         if ($this->memory and is_numeric($val))
         {
-            $this->memory -= $val;
-            return true;
+            return $this->memory -= $val;
         }
         return false;
     }
@@ -139,7 +137,7 @@ class Calculator
     {
         if ($this->numsChecker())
         {
-            return $this->num1 - $this->num2;
+            return $this->num1 * $this->num2;
         }
         return false;
     }
@@ -161,14 +159,14 @@ class Calculator
     {
         if ($this->num1)
         {
-            return $this->num1 - ($this->num1 * 2);
+            return $this->num1 = $this->num1 - ($this->num1 * 2);
         }
         return false;
     }
 
     public function squareRoot ()
     {
-        if ($this->num1)
+        if ($this->num1 and $this->num1 > 0)
         {
             return sqrt($this->num1);
         }
