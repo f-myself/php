@@ -1,5 +1,19 @@
 <?php
 
+function checkPermission()
+{
+	if (is_dir(DIR_PATH))
+	{
+		$permission = substr(sprintf('%o', fileperms(DIR_PATH)), -4)[3];
+	}
+	
+	if($permission >= 5)
+	{
+		return true;
+	}
+	return false;
+}
+
 function checkErrorUpload($error)
 {
 	switch ($error) 
@@ -61,8 +75,31 @@ function checkSize ($size)
 	}
 }
 
+
+function fileUpload ($file)
+{
+	if (!checkPermission())
+	{
+		return ERR_DIR_PERM;
+	}
+
+	if ($file) 
+	{
+		if (move_uploaded_file($file['upload']['tmp_name'], DIR_PATH . charsetFileNameToSys(basename($file['upload']['name']))))
+		{
+			return OK_FILE_UPLOAD;
+		}
+		return checkErrorUpload($file['upload']['error']);
+	}
+}
+
 function getFilesInfo ()
 {
+	if (!checkPermission())
+	{
+		return ERR_DIR_PERM;
+	}
+
 	$filesInfo = [];
 
 	if (is_dir(DIR_PATH))
@@ -90,4 +127,18 @@ function getFilesInfo ()
 		return ERR_EMPTY_FOLDER;
 	}
 	return $filesInfo;
+}
+
+function deleteFile ($arrPath)
+{
+	if (!checkPermission())
+	{
+		return ERR_DIR_PERM;
+	}
+
+	if(unlink($arrPath['path']))
+	{
+		return OK_DELETED;
+	}
+	return ERR_DELETED;
 }

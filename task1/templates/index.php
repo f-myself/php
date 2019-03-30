@@ -15,7 +15,7 @@
 		</form>
 	</div>
 <?
-	if ($filesInfo != ERR_NO_FOLDER and $filesInfo != ERR_EMPTY_FOLDER)
+	if (is_array($filesInfo))
 	{
 ?>
 	<h3><?=$_COOKIE['deleteStatus']?></h3>

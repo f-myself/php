@@ -6,6 +6,7 @@ define("CH_SYS", "windows-1251");
 
 /** Messages for file uploads **/
 define("OK_FILE_UPLOAD", "Thanks! File was uploaded correctly!");
+define("ERR_DIR_PERM", "Permission not denied. Cannot finish operation.");
 define("ERR_NO_CODE", "Some problems with uploading file. Please, contact admin.");
 define("ERR_TOO_LARGE", "Sorry, file is too large");
 define("ERR_NOT_COMPLETELY", "Sorry, file was not uploaded completely.");
