@@ -7,7 +7,7 @@ function checkPermission()
 		$permission = substr(sprintf('%o', fileperms(DIR_PATH)), -4)[3];
 	}
 	
-	if($permission >= 5)
+	if($permission == 7)
 	{
 		return true;
 	}
