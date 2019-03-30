@@ -3,8 +3,8 @@
 include "config.php";
 include "functions.php";
 
-$statusMessage = NULL;
-$tableStatus = NULL;
+setcookie("statusMessage", "Please, upload file");
+setcookie("deleteStatus", "Files in Dir");
 
 if($_SERVER['REQUEST_METHOD'] == "POST")
 {
