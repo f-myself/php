@@ -80,7 +80,7 @@
 		</div>
 		<div class="row bg-light">
 			<div class="col-12 pt-3">
-				<h4>Sample to get from number 1: </h4>
+				<h4>Sample to get percent from number 1: </h4>
 				<p class="pt-2">
 					25% of <?=$num1?>: <?=$percentRes?>
 				</p>

@@ -1,0 +1,5 @@
+Hello* This is example text.
+London is the capital of Grait Britain.
+<b>I've change this string.</b>
+Actually, he is a good hunter.
+<b>And this one too.</b>
