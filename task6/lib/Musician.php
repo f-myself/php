@@ -32,7 +32,7 @@ class Musician implements iMusician
     
     public function addInstrument(iInstrument $obj)
     {
-        if (array_push($this->instruments, $obj->getName()))
+        if (array_push($this->instruments, $obj))
         {
             return true;
         }

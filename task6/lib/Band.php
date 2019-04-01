@@ -45,7 +45,7 @@ class Band implements iBand
 
     public function addMusician(iMusician $obj)
     {
-        if (array_push($this->musicians, $obj->getName()))
+        if (array_push($this->musicians, $obj))
         {
             return true;
         }
