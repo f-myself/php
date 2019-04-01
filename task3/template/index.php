@@ -10,6 +10,7 @@
 		<div class="row pt-3 bg-white">
 			<div class="col-12">
 				<p><?php
+				echo $statusMessage;
 				for ($i=0; $i < $countString; $i++) 
 				{
 					echo $fileWork->getSourceString($i);
