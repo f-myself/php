@@ -12,7 +12,7 @@ class Musician implements iMusician
         $this->name = "";
         $this->bands = [];
         $this->instruments = [];
-        $this->type = "";
+        $this->type = [];
     }
     
     public function setName($name="")
@@ -46,15 +46,18 @@ class Musician implements iMusician
     
     public function assingToBand(iBand $nameBand)
     {
-        /* Realize after class Band */
-        return true;
+        if (array_push($this->bands, $nameBand))
+        {
+            return true;
+        }
+        
     }
 
     public function setMusicianType($type)
     {
         if ($type)
         {
-            $this->type = $type;
+            array_push($this->type, $type);
             return true;
         }
         return false;
