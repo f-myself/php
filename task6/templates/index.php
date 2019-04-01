@@ -17,12 +17,14 @@
 		<div class="row pt-3 bg-white">
 			<div class="col-12">
 				<h5 class="text-center">Musicians in the band:</h5>
-				<?php
-				print_r($bandMusicians);
-					/*foreach ($bandMusicians as $value) {
-						echo $value;
-					}*/
-				?>
+				<p>
+					<?php
+						foreach ($bandMusicians as $value) 
+						{
+							echo  $value->getName() . "<br />";
+						}
+					?>
+				</p>
 			</div>
 		</div>
 	</div>

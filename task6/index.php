@@ -69,6 +69,14 @@ foreach ($musicians as $key => $value)
 	}
 }
 
+foreach ($musicians as $value) 
+{
+	if(!$band->addMusician($$value))
+	{
+		$statusMessage = ERR_BAND_JOIN;
+	}
+}
+
 /* Adding instruments */
 
 /* Add instruments to John Doe */
