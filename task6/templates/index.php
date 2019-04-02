@@ -21,7 +21,7 @@
 					<?php
 						foreach ($bandMusicians as $value) 
 						{
-							echo  $value->getName() . "<br />";
+							echo  $value->getName() . "<br>";
 						}
 					?>
 				</p>
