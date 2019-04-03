@@ -36,17 +36,18 @@ class HtmlHelper
             $fullTable .= "</tr></thead>";
         }
 
-        if (is_array($tbody))
+        if (is_array($tcontent))
         {
             $fullTable .= "<tbody>\n";
-            foreach ($thead as $key => $value)
+            foreach ($tcontent as $key => $value)
             {
                 $fullTable .= "<tr>";
                 foreach ($value as $td)
+                
                 {
                     $fullTable .= "<td>" . $td . "</td>";
                 }
-                $fullTable .= "<tr>";
+                $fullTable .= "</tr>";
             }
             $fullTable .= "</tbody>";
         }

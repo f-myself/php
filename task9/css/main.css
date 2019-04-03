@@ -5,3 +5,16 @@ input {
 label {
     display: block;
 }
+
+table thead {
+    font-weight: 600;
+}
+
+table tfoot {
+    font-style: italic;
+}
+
+table td {
+    border: solid 1px black;
+    padding: 5px;
+}
