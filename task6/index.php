@@ -96,19 +96,19 @@ if(!$janeDoe->addInstrument($piano))
 }
 
 /* Add instruments to Mike Goldberg */
-if(!$johnDoe->addInstrument($drums))
+if(!$mikeGoldberg->addInstrument($drums))
 {
 	$statusMessage = ERR_MUSICIAN_INSTRUMENT;
 }
 
 /* Add instruments to Chuck Norris */
-if(!$johnDoe->addInstrument($guitar))
+if(!$chuckNorris->addInstrument($guitar))
 {
 	$statusMessage = ERR_MUSICIAN_INSTRUMENT;
 }
 
 /* Add instruments to Bruce Stark */
-if(!$johnDoe->addInstrument($bassGuitar))
+if(!$bruceStark->addInstrument($bassGuitar))
 {
 	$statusMessage = ERR_MUSICIAN_INSTRUMENT;
 }

@@ -21,7 +21,29 @@
 					<?php
 						foreach ($bandMusicians as $value) 
 						{
-							echo  $value->getName() . "<br>";
+							echo  "<b>" . $value->getName() . "</b>. Role is:";
+							foreach ($value->getMusicianType() as $type) {
+								echo " " . $type;
+							}
+							echo "; Plays on: ";
+							foreach ($value->getInstrument() as $instrument)
+							{
+								echo $instrument->getName() . " ";
+							}
+							echo "<br>";
+						}
+					?>
+				</p>
+			</div>
+		</div>
+		<div class="row pt-3 bg-white">
+			<div class="col-12">
+				<h5 class="text-center">Instruments:</h5>
+				<p>
+					<?php
+						foreach ($instruments as $value) 
+						{
+							echo "<b>" . $$value->getName() . ".</b> Category: " . $$value->getCategory() . "<br>";
 						}
 					?>
 				</p>
