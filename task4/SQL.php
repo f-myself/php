@@ -3,6 +3,7 @@
 class SQL 
 {
     private $fields;
+    private $query;
     private $tableName;
     private $conditions;
     private $values;
@@ -11,6 +12,7 @@ class SQL
     function __construct ()
     {
         $this->fields = [];
+        $this->query = [];
         $this->tableName = "";
         $this->conditions = [];
         $this->values = [];
@@ -89,12 +91,21 @@ class SQL
 
     public function getLimit ()
     {
-        return true;
+        return $this->limit;
     }
 
     public function select()
     {
-        return true;
+        if ($this->fields)
+        {
+            $fields = implode(", ", $this->fields);
+            
+        }
+
+        if ($this->tableName)
+        {
+            
+        }
     }
 
     public function insert()
