@@ -19,10 +19,20 @@ class SQL
         $this->limit = 1;
     }
 
-    public function setFields ($field=NULL)
+    private function starChecker ($value)
     {
-        if ($field)
+        if (stripos($value, "*") === false)
         {
+            return true;
+        }
+        return false;
+    }
+
+    public function setField ($field=NULL)
+    {
+        if ($field and $this->starChecker($field))
+        {
+            $field = trim(strip_tags($field));
             array_push($this->fields, $field);
             return true;
         }
@@ -36,8 +46,9 @@ class SQL
 
     public function setTableName ($tableName=NULL)
     {
-        if ($tableName)
+        if ($tableName and $this->starChecker($tableName))
         {
+            $tableName = trim(strip_tags($tableName));
             $this->tableName = $tableName;
             return true;
         }
@@ -49,10 +60,11 @@ class SQL
         return $this->tableName;
     }
 
-    public function setConditions ($condition)
+    public function setCondition ($condition)
     {
-        if ($condition)
+        if ($condition and $this->starChecker($condition))
         {
+            $condition = trim(strip_tags($condition));
             array_push($this->conditions, $condition);
             return true;
         }
@@ -64,11 +76,12 @@ class SQL
         return $this->conditions;
     }
 
-    public function setValues ($value)
+    public function setValue ($value)
     {
         if ($value)
         {
-            array_push($this->values, $value);
+            $value = trim(strip_tags($value));
+            array_push($this->values, "'$value'");
             return true;
         }
         return false;
@@ -99,27 +112,90 @@ class SQL
         if ($this->fields)
         {
             $fields = implode(", ", $this->fields);
-            
+            array_push($this->query, "SELECT $fields");
         }
 
         if ($this->tableName)
         {
-            
+            array_push($this->query, "FROM $this->tableName");
         }
+
+        if ($this->conditions)
+        {
+            $conditions = implode(", ", $this->conditions);
+            array_push($this->query, "WHERE $conditions");
+        }
+
+        if ($this->limit)
+        {
+            array_push($this->query, "LIMIT $this->limit");
+        }
+
+        return implode(" ", $this->query);
     }
 
     public function insert()
     {
-        return true;
+        if ($this->tableName)
+        {
+            array_push($this->query, "INSERT INTO $this->tableName");
+        }
+
+        if ($this->fields)
+        {
+            $fields = implode(", ", $this->fields);
+            array_push($this->query, "($fields)");
+        }
+
+        if ($this->values)
+        {
+            $values = implode(", ", $this->values);
+            array_push($this->query, "VALUES ($values)");
+        }
+
+        return implode(" ", $this->query);
     }
 
     public function delete()
     {
-        return true;
+        if ($this->tableName)
+        {
+            array_push($this->query, "DELETE FROM $this->tableName");
+        }
+
+        if ($this->conditions)
+        {
+            $conditions = implode(", ", $this->conditions);
+            array_push($this->query, "WHERE $conditions");
+        }
+
+        return implode(" ", $this->query);
     }
 
     public function update()
     {
-        return true;
+        if ($this->tableName)
+        {
+            array_push($this->query, "UPDATE $this->tableName");
+        }
+        if ($this->fields and $this->values)
+        {
+            array_push($this->query, "SET");
+            $count = count($this->fields);
+            foreach ($this->fields as $key => $field) {
+                if($key != $count--)
+                {
+                    array_push($this->query, "$field = {$this->values[$key]},");
+                } else {
+                    array_push($this->query, "$field = {$this->values[$key]}");
+                }
+            }
+        }
+        if ($this->conditions)
+        {
+            $conditions = implode(", ", $this->conditions);
+            array_push($this->query, "WHERE $conditions");
+        }
+        return implode(" ", $this->query);
     }
 }
