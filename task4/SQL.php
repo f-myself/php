@@ -2,12 +2,12 @@
 
 class SQL 
 {
-    private $fields;
-    private $query;
-    private $tableName;
-    private $conditions;
-    private $values;
-    private $limit;
+    protected $fields;
+    protected $query;
+    protected $tableName;
+    protected $conditions;
+    protected $values;
+    protected $limit;
 
     function __construct ()
     {
@@ -53,6 +53,11 @@ class SQL
             return true;
         }
         return false;
+    }
+
+    public function getQuery ()
+    {
+        return $this->query;
     }
 
     public function getTableName ()
@@ -131,7 +136,7 @@ class SQL
             array_push($this->query, "LIMIT $this->limit");
         }
 
-        return implode(" ", $this->query);
+        $this->query = implode(" ", $this->query);
     }
 
     public function insert()
@@ -153,7 +158,7 @@ class SQL
             array_push($this->query, "VALUES ($values)");
         }
 
-        return implode(" ", $this->query);
+        $this->query = implode(" ", $this->query);
     }
 
     public function delete()
@@ -169,7 +174,7 @@ class SQL
             array_push($this->query, "WHERE $conditions");
         }
 
-        return implode(" ", $this->query);
+        $this->query = implode(" ", $this->query);
     }
 
     public function update()
@@ -196,6 +201,6 @@ class SQL
             $conditions = implode(", ", $this->conditions);
             array_push($this->query, "WHERE $conditions");
         }
-        return implode(" ", $this->query);
+        $this->query = implode(" ", $this->query);
     }
 }

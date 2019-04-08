@@ -2,21 +2,30 @@
 
 include "config.php";
 include "SQL.php";
-include "MySQL";
+include "MySQL.php";
 
-$sql = new SQL;
+$sql = new MySQL;
 
-$sql->setField("name");
-$sql->setField("description");
+$sql->setField("*");
+//$sql->setField("description");
 
 $sql->setTableName("task4");
-$sql->setCondition("name='Vasya'");
+//$sql->setCondition("name='Vasya'");
 $sql->setValue("John");
 $sql->setValue("Bastard of Eddard Stark");
 
+//$mysql = new MySQL;
+$sql->setLimit(20);
+
+var_dump($sql->insert()) ;
+
+
+
+
+
 //echo $sql->getLimit();
 
-$sql->setLimit(1);
+
 
 //$q = $sql->update();
 
