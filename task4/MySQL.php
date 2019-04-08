@@ -58,7 +58,34 @@ class MySQL extends SQL
 			}
 			return true;
 		}
-		echo $this->getQuery();
+		return false;
+	}
+
+	public function delete()
+	{
+		if($this->link)
+		{
+			parent::delete();
+			if(!mysql_query($this->query))
+			{
+				return mysql_error();
+			}
+			return true;
+		}
+		return false;
+	}
+
+	public function update()
+	{
+		if($this->link)
+		{
+			parent::update();
+			if(!mysql_query($this->query))
+			{
+				return mysql_error();
+			}
+			return true;
+		}
 		return false;
 	}
 

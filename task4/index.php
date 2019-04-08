@@ -17,7 +17,7 @@ $sql->setValue("Bastard of Eddard Stark");
 //$mysql = new MySQL;
 $sql->setLimit(20);
 
-var_dump($sql->insert()) ;
+//var_dump($sql->insert());
 
 
 
