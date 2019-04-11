@@ -15,32 +15,135 @@ $ini = new IniFile;
 $json = new Json;
 $mysql = new MySQL;
 
-if (saveData($mysql, 'new', 'google'))
+/* Logic for sessions */
+if (saveData($ses, 'new', 'google'))
 {
-    echo "Input success\n";
+    $sesInput = OK_INPUT;
 } else {
-    echo "INI not set\n";
+    $sesInput = ERR_SES_INPUT;
 }
 
-if ($data = getData($mysql, 'new'))
+if (!$firstSesData = getData($ses, 'new'))
 {
-    echo $data . "\n"; 
+	$firstSesData = ERR_GET_DATA;
+}
+
+if (deleteData($ses, 'new'))
+{
+    $sesDelete = OK_DELETE;
 } else {
-	echo "Something wrong";
+	$sesDelete = ERR_DELETE;
+}
+
+if (!$secondSesData = getData($ses, 'new'))
+{
+	$secondSesData = ERR_GET_DATA;
+}
+/* End logic for sessions */
+
+
+/* Logic for cookies */
+if (saveData($coo, 'new', 'google'))
+{
+    $cooInput = OK_INPUT;
+} else {
+    $cooInput = ERR_COOKIE_INPUT;
+}
+
+if (!$firstCooData = getData($coo, 'new'))
+{
+	$firstCooData = ERR_GET_DATA;
+}
+
+if (deleteData($coo, 'new'))
+{
+    $cooDelete = OK_DELETE;
+} else {
+	$cooDelete = ERR_DELETE;
+}
+
+if (!$secondCooData = getData($coo, 'new'))
+{
+	$secondCooData = ERR_GET_DATA;
+}
+/* End logic for cookies */
+
+/* Logic for ini-files */
+if (saveData($ini, 'new', 'google'))
+{
+    $iniInput = OK_INPUT;
+} else {
+    $iniInput = ERR_INI_INPUT;
+}
+
+if (!$firstIniData = getData($ini, 'new'))
+{
+	$firstIniData = ERR_GET_DATA;
+}
+
+if (deleteData($ini, 'new'))
+{
+    $iniDelete = OK_DELETE;
+} else {
+	$iniDelete = ERR_DELETE;
+}
+
+if (!$secondIniData = getData($ini, 'new'))
+{
+	$secondIniData = ERR_GET_DATA;
+}
+/* End logic for ini-files */
+
+/* Logic for json */
+if (saveData($json, 'new', 'google'))
+{
+    $jsonInput = OK_INPUT;
+} else {
+    $jsonInput = ERR_JSON_INPUT;
+}
+
+if (!$firstJsonData = getData($json, 'new'))
+{
+	$firstJsonData = ERR_GET_DATA;
+}
+
+if (deleteData($json, 'new'))
+{
+    $jsonDelete = OK_DELETE;
+} else {
+	$jsonDelete = ERR_DELETE;
+}
+
+if (!$secondJsonData = getData($json, 'new'))
+{
+	$secondJsonData = ERR_GET_DATA;
+}
+/* End logic for json */
+
+/* Logic for MySQL */
+if (saveData($mysql, 'new', 'google'))
+{
+    $mysqlInput = OK_INPUT;
+} else {
+    $mysqlInput = ERR_MYSQL_INPUT;
+}
+
+if (!$firstMysqlData = getData($mysql, 'new'))
+{
+	$firstMysqlData = ERR_GET_DATA;
 }
 
 if (deleteData($mysql, 'new'))
 {
-    echo "Cookie deleted\n";
+    $mysqlDelete = OK_DELETE;
 } else {
-	echo "Not deleted";
+	$mysqlDelete = ERR_DELETE;
 }
 
-if ($data = getData($mysql, 'new'))
+if (!$secondMysqlData = getData($mysql, 'new'))
 {
-    echo $data . "\n";
-} else {
-	echo "Something wrong";
+	$secondMysqlData = ERR_GET_DATA;
 }
+/* End logic for MySQL */
 
 include "templates/index.php";
