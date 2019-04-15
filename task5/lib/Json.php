@@ -44,15 +44,15 @@ class Json implements iWorkData
 
 	public function saveData ($key=NULL, $val=NULL)
 	{
-		if ($this->getValue($key))
-		{
-			return false;
-		}
+		//if ($this->getValue($key))
+		//{
+		//	return false;
+		//}
 
 		if ($key and $val and $this->checkPermission())
 		{
 			$data[$key] = $val;
-			$data = json_encode($data);
+			$data = json_encode($data);			
 			file_put_contents(PATH_JSON, $data . "\n", FILE_APPEND);
 			return true;
 		}

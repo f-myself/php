@@ -2,7 +2,7 @@
 
 /* Pathes to work files */
 define('PATH_INI', 'files/variables.ini');
-define('PATH_JSON', 'files/file.JSON');
+define('PATH_JSON', 'files/file.json');
 
 /* Database config */ 
 define(DB_HOST, 'localhost');

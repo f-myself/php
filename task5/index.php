@@ -95,24 +95,26 @@ if (!$secondIniData = getData($ini, 'new'))
 /* End logic for ini-files */
 
 /* Logic for json */
-if (saveData($json, 'new', 'google'))
+if (saveData($json, 'new1', 'google1'))
 {
+	saveData($json, 'new2', 'google2');
+	saveData($json, 'new3', 'google3');
     $jsonInput = OK_INPUT;
 } else {
     $jsonInput = ERR_JSON_INPUT;
 }
 
-if (!$firstJsonData = getData($json, 'new'))
-{
-	$firstJsonData = ERR_GET_DATA;
-}
+//if (!$firstJsonData = getData($json, 'new'))
+//{
+//	$firstJsonData = ERR_GET_DATA;
+//}
 
-if (deleteData($json, 'new'))
+/*if (deleteData($json, 'new'))
 {
     $jsonDelete = OK_DELETE;
 } else {
 	$jsonDelete = ERR_DELETE;
-}
+}*/
 
 if (!$secondJsonData = getData($json, 'new'))
 {
