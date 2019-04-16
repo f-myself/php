@@ -44,10 +44,10 @@ class Json implements iWorkData
 
 	public function saveData ($key=NULL, $val=NULL)
 	{
-		//if ($this->getValue($key))
-		//{
-		//	return false;
-		//}
+		if ($this->getValue($key))
+		{
+			return false;
+		}
 
 		if ($key and $val and $this->checkPermission())
 		{

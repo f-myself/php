@@ -8,18 +8,13 @@ class PgSQL extends SQL
 	public function __construct ()
 	{
 		parent::__construct();
-		if(!$this->link = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD))
+		if(!$this->link = pg_connect("host=" . DB_HOST . " dbname=" . DB_NAME . " user=" . DB_USER . " password=" . DB_PASSWORD))
 		{
-			if (!mysql_error($this->link))
+			if (!pg_connection_status($this->link) == PGSQL_CONNECTION_BAD)
 			{
 				$this->connError = ERR_CONNECT_DB;
 			}
-			$this->connError = mysql_error($this->link);
-		}
-
-		if(!mysql_select_db(DB_NAME))
-		{
-			$this->connError = mysql_error();
+			$this->connError = pg_connection_status($this->link);
 		}
 	}
 
@@ -34,11 +29,11 @@ class PgSQL extends SQL
 		{
 			parent::select();
 			$resultSelect = [];
-			if(!$result = mysql_query($this->query))
+			if(!$result = pg_query($this->link, $this->query))
 			{
-				return mysql_error();
+				return pg_last_error($this->link);
 			}
-			while ($row = mysql_fetch_assoc($result))
+			while ($row = pg_fetch_assoc($result))
 			{
 				array_push($resultSelect, $row);
 			}
@@ -52,9 +47,9 @@ class PgSQL extends SQL
 		if($this->link)
 		{
 			parent::insert();
-			if(!mysql_query($this->query))
+			if(!pg_query($this->link, $this->query))
 			{
-				return mysql_error();
+				return pg_last_error($this->link);
 			}
 			return true;
 		}
@@ -66,9 +61,9 @@ class PgSQL extends SQL
 		if($this->link)
 		{
 			parent::delete();
-			if(!mysql_query($this->query))
+			if(!pg_query($this->link, $this->query))
 			{
-				return mysql_error();
+				return pg_last_error($this->link);
 			}
 			return true;
 		}
@@ -80,9 +75,9 @@ class PgSQL extends SQL
 		if($this->link)
 		{
 			parent::update();
-			if(!mysql_query($this->query))
+			if(!pg_query($this->link, $this->query))
 			{
-				return mysql_error();
+				return pg_last_error($this->link);
 			}
 			return true;
 		}
@@ -94,7 +89,7 @@ class PgSQL extends SQL
 	{
 		if($this->link)
 		{
-			mysql_close($this->link);
+			pg_close($this->link);
 		}
 
 	}

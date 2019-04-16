@@ -104,17 +104,17 @@ if (saveData($json, 'new1', 'google1'))
     $jsonInput = ERR_JSON_INPUT;
 }
 
-//if (!$firstJsonData = getData($json, 'new'))
-//{
-//	$firstJsonData = ERR_GET_DATA;
-//}
+if (!$firstJsonData = getData($json, 'new1'))
+{
+	$firstJsonData = ERR_GET_DATA;
+}
 
-/*if (deleteData($json, 'new'))
+if (deleteData($json, 'new'))
 {
     $jsonDelete = OK_DELETE;
 } else {
 	$jsonDelete = ERR_DELETE;
-}*/
+}
 
 if (!$secondJsonData = getData($json, 'new'))
 {

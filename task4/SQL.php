@@ -44,6 +44,12 @@ class SQL
         return $this->fields;
     }
 
+    public function clearFields ()
+    {
+        $this->fields = [];
+        return true;
+    }
+
     public function setTableName ($tableName=NULL)
     {
         if ($tableName and $this->starChecker($tableName))
@@ -80,6 +86,11 @@ class SQL
     {
         return $this->conditions;
     }
+    public function clearConditions () 
+    {
+        $this->conditions = [];
+        return true;
+    }
 
     public function setValue ($value)
     {
@@ -95,6 +106,12 @@ class SQL
     public function getValues ()
     {
         return $this->values;
+    }
+
+    public function clearValues ()
+    {
+        $this->values = [];
+        return true;
     }
 
     public function setLimit ($limit)
