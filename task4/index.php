@@ -37,11 +37,23 @@ if (!$pg->setField('name') or !$pg->setField('description'))
 /* End of setting */
 
 /* Inserting data */
-$mysql->setValue('John Doe'); //set value for Name column on mysql
-$mysql->setValue('Unknown human, age 30-40'); //set value for Description column on mysql
+if ($mysql->setValue('John Doe')) //set value for Name column on mysql
+{
+	$status = ERR_SET_VALUE;
+} 
+if ($mysql->setValue('Unknown human, age 30-40')) //set value for Description column on mysql
+{
+	$status = ERR_SET_VALUE;
+} 
 
-$pg->setValue('John Doe'); //set value for Name column on postgresql
-$pg->setValue('Unknown human, age 30-40'); //set value for Description column on postgresql
+if ($pg->setValue('John Doe')) //set value for Name column on postgresql
+{
+	$status = ERR_SET_VALUE;
+} 
+if ($pg->setValue('Unknown human, age 30-40')) //set value for Description column on postgresql
+{
+	$status = ERR_SET_VALUE;
+} 
 
 
 if (!$mysql->insert())
@@ -90,11 +102,56 @@ $pgSelectQuery = $pg->getQuery();
 /* End of selecting data */
 
 /* Update data */
-if ($mysql->update())
+$mysql->clearFields();
+$pg->clearFields();
+$mysql->clearValues();
+$pg->clearValues();
+
+if (!$mysql->setField('name'))
 {
-	
+	$status = ERR_SET_FIELDS;
 }
 
+if (!$pg->setField('name'))
+{
+	$status = ERR_SET_FIELDS;
+}
+
+if (!$mysql->setValue('Vasya Pupkin'))
+{
+	$status = ERR_SET_VALUE;
+} 
+
+if (!$pg->setValue('Vasya Pupkin'))
+{
+	$status = ERR_SET_VALUE;
+} 
+
+if (!$pg->update())
+{
+	$mysqlUpdateResult = ERR_UPDATE;
+}
+
+if (!$pg->update())
+{
+	$pgUpdateResult = ERR_UPDATE;
+}
 /* End of updating data */
+
+/* Delete data */
+$mysql->clearConditions ()
+
+if (!$mysql->setCondition("name='Vasya Pupkin'"))
+{
+	$status = ERR_SET_COND;
+}
+
+if (!$mysql->delete())
+{
+	$mysqlDeleteResult = ERR_DELETE
+}
+
+
+/* End of deleting data */
 
 include "templates/index.php";
