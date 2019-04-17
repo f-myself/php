@@ -25,7 +25,7 @@ class MySQL extends SQL
 
 	public function getError()
 	{
-		return $this->connError();
+		return $this->connError;
 	}
 
 	public function select()

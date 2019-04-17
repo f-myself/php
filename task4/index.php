@@ -7,9 +7,9 @@ include "PgSQL.php";
 
 /* Create Objects */ 
 $mysql = new MySQL;
-if ($myslq->getError())
+if ($mysql->getError())
 {
-	$status = $myslq->getError();
+	$status = $mysql->getError();
 }
 $pg = new PgSQL;
 if ($pg->getError())
@@ -25,7 +25,7 @@ if(!$mysql->setTableName(DB_TABLE_NAME) or
 	$status = ERR_SET_TABLE_NAME;
 }
 
-if (!$mysql->setField('name') or !$myslq->setField('description'))
+if (!$mysql->setField('name') or !$mysql->setField('description'))
 {
 	$status = ERR_SET_FIELDS;
 }
@@ -37,20 +37,20 @@ if (!$pg->setField('name') or !$pg->setField('description'))
 /* End of setting */
 
 /* Inserting data */
-if ($mysql->setValue('John Doe')) //set value for Name column on mysql
+if (!$mysql->setValue('John Doe')) //set value for Name column on mysql
 {
 	$status = ERR_SET_VALUE;
 } 
-if ($mysql->setValue('Unknown human, age 30-40')) //set value for Description column on mysql
+if (!$mysql->setValue('Unknown human, age 30-40')) //set value for Description column on mysql
 {
 	$status = ERR_SET_VALUE;
 } 
 
-if ($pg->setValue('John Doe')) //set value for Name column on postgresql
+if (!$pg->setValue('John Doe')) //set value for Name column on postgresql
 {
 	$status = ERR_SET_VALUE;
 } 
-if ($pg->setValue('Unknown human, age 30-40')) //set value for Description column on postgresql
+if (!$pg->setValue('Unknown human, age 30-40')) //set value for Description column on postgresql
 {
 	$status = ERR_SET_VALUE;
 } 
@@ -63,7 +63,7 @@ if (!$mysql->insert())
 	$mysqlInsertStatus = OK_INSERT;
 }
 
-$mysqlInsertQuery = $myslq->getQuery();
+$mysqlInsertQuery = $mysql->getQuery();
 
 if (!$pg->insert())
 {
@@ -127,19 +127,26 @@ if (!$pg->setValue('Vasya Pupkin'))
 	$status = ERR_SET_VALUE;
 } 
 
-if (!$pg->update())
+if (!$mysql->update())
 {
 	$mysqlUpdateResult = ERR_UPDATE;
+} else {
+	$mysqlUpdateResult = OK_UPDATE;
 }
+$mysqlUpdateQuery = $mysql->getQuery();
 
 if (!$pg->update())
 {
 	$pgUpdateResult = ERR_UPDATE;
+} else {
+	$pgUpdateResult = OK_UPDATE;
 }
+
+$pgUpdateQuery = $pg->getQuery();
 /* End of updating data */
 
 /* Delete data */
-$mysql->clearConditions ()
+$mysql->clearConditions();
 
 if (!$mysql->setCondition("name='Vasya Pupkin'"))
 {
@@ -148,9 +155,27 @@ if (!$mysql->setCondition("name='Vasya Pupkin'"))
 
 if (!$mysql->delete())
 {
-	$mysqlDeleteResult = ERR_DELETE
+	$mysqlDeleteResult = ERR_DELETE;
+} else {
+	$mysqlDeleteResult = OK_DELETE;
 }
 
+$mysqlDeleteQuery = $mysql->getQuery();
+
+$pg->clearConditions();
+
+if (!$pg->setCondition("name='Vasya Pupkin'"))
+{
+	$status = ERR_SET_COND;
+}
+
+if (!$pg->delete())
+{
+	$pgDeleteResult = ERR_DELETE;
+} else {
+	$pgDeleteResult = OK_DELETE;
+}
+$pgDeleteQuery = $pg->getQuery();
 
 /* End of deleting data */
 

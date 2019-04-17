@@ -66,6 +66,11 @@ class SQL
         return $this->query;
     }
 
+    protected function clearQuery ()
+    {
+        $this->query = [];
+    }
+
     public function getTableName ()
     {
         return $this->tableName;
@@ -131,6 +136,7 @@ class SQL
 
     public function select()
     {
+        $this->clearQuery ();
         if ($this->fields)
         {
             $fields = implode(", ", $this->fields);
@@ -158,6 +164,7 @@ class SQL
 
     public function insert()
     {
+        $this->clearQuery ();
         if ($this->tableName)
         {
             array_push($this->query, "INSERT INTO $this->tableName");
@@ -180,6 +187,7 @@ class SQL
 
     public function delete()
     {
+        $this->clearQuery ();
         if ($this->tableName)
         {
             array_push($this->query, "DELETE FROM $this->tableName");
@@ -196,6 +204,7 @@ class SQL
 
     public function update()
     {
+        $this->clearQuery ();
         if ($this->tableName)
         {
             array_push($this->query, "UPDATE $this->tableName");
@@ -205,7 +214,7 @@ class SQL
             array_push($this->query, "SET");
             $count = count($this->fields);
             foreach ($this->fields as $key => $field) {
-                if($key != $count--)
+                if($key != $count-1)
                 {
                     array_push($this->query, "$field = {$this->values[$key]},");
                 } else {
