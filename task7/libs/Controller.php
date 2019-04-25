@@ -12,6 +12,7 @@ class Controller
 				
 			if(isset($_POST['email']))
 			{	
+				
 				$this->pageSendMail();
 			}
 			else
@@ -24,13 +25,27 @@ class Controller
 		
 		private function pageSendMail()
 		{
-			if($this->model->checkForm() === true)
+			$checkResult = $this->model->checkForm($_POST);
+			if($checkResult === true)
 			{
-				$this->model->sendEmail();
+				$status = $this->model->sendEmail($_POST);
+				$mArray = $this->model->getArray();
+				$mArray['%STATUS%'] = $status;
+				$this->view->addToReplace($mArray);	
+				return true;
 			}
-			$mArray = $this->model->getArray();	
-			$mArray['%NAME%'] = $_POST['name'];
-	        $this->view->addToReplace($mArray);	
+				$subject = $this->model->getSelected($_POST['subject']);
+				$mArray = $this->model->getArray();	
+				$mArray['%NAME%'] = $_POST['name'];
+				$mArray['%EMAIL%'] = $_POST['email'];
+				$mArray['%TEXT%'] = $_POST['text'];
+				if ($subject)
+				{
+					$mArray[$subject] = 'selected';
+				} 
+				$mArray['%ERRORS%'] = $checkResult;
+		        $this->view->addToReplace($mArray);
+	        return false;	
 		}	
 			    
 		private function pageDefault()
