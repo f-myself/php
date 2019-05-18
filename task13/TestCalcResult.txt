@@ -1,0 +1,9 @@
+$ php phpunit.phar libs/CalculatorTest.php
+PHPUnit 3.7.38 by Sebastian Bergmann.
+
+................................................................. 65 / 70 ( 92%)
+.....
+
+Time: 88 ms, Memory: 5.00Mb
+
+OK (70 tests, 70 assertions)
