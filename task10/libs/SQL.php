@@ -1,232 +1,351 @@
 <?php
 
-class SQL 
+include "sql_config.php";
+
+class SQL
 {
-    protected $fields;
-    protected $query;
-    protected $tableName;
-    protected $conditions;
-    protected $values;
-    protected $limit;
+	protected $select;
+	protected $insert;
+	protected $delete;
+	protected $update;
+	protected $from;
+	protected $where;
+	protected $join;
+	protected $leftJoin;
+	protected $rightJoin;
+	protected $crossJoin;
+	protected $naturalJoin;
+	protected $group;
+	protected $having;
+	protected $order;
+	protected $limit;
+	protected $query;
+	protected $errors;
 
-    function __construct ()
+	function __construct ()
+	{
+			$this->select = "SELECT";
+			$this->insert = "INSERT INTO";
+			$this->delete = "DELETE FROM";
+			$this->update = "UPDATE";
+			$this->from = "FROM";
+			$this->where = "WHERE";
+			$this->join = "INNER JOIN";
+			$this->leftJoin = "LEFT OUTER JOIN";
+			$this->rightJoin = "RIGHT OUTER JOIN";
+			$this->crossJoin = "CROSS JOIN";
+			$this->naturalJoin = "NATURAL JOIN";
+			$this->group = "GROUP BY";
+			$this->having = "HAVING";
+			$this->order = "ORDER BY";
+			$this->limit = "LIMIT";
+			$this->query = "";
+			$this->errors = [];
+	}
+
+	public function getErrors()
+	{
+		return $this->errors;
+	}
+
+	public function getQuery()
+	{
+		return $this->query;
+	}
+
+	public function newQuery()
+	{
+		$this->query = "";
+	}
+
+    public function select($columns=" *", $distinct=false)
     {
-        $this->fields = [];
-        $this->query = [];
-        $this->tableName = "";
-        $this->conditions = [];
-        $this->values = [];
-        $this->limit = 1;
+    	if ($this->query)
+    		{
+    			$this->query .= " " . $this->select;
+    		} else {
+    			$this->query .= $this->select;
+    		}
+
+    	if ($distinct === true)
+    	{
+    		$this->query .= " DISTINCT";
+    	}
+
+    	if (is_string($columns))
+    	{
+    		$this->query .= " $columns";
+    		return $this;
+    	}
+
+    	if(is_array($columns))
+    	{
+    		foreach ($columns as $col) 
+    		{
+    			$this->query .= " " . trim($col) . ",";
+    		}
+    		$this->query = substr($this->query, 0, -1);
+    		return $this;
+    	}
+
+    	array_push($this->errors, ERR_VAL_COLUMNS);
+    	return $this;
     }
 
-    private function starChecker ($value)
+    public function from($tableName)
     {
-        if (stripos($value, "*") === false)
-        {
-            return true;
-        }
-        return false;
+    	if(is_string($tableName) and trim($tableName))
+    	{
+    		$this->query .= " $this->from " . trim($tableName);
+    		return $this;
+    	}
+    	array_push($this->errors, ERR_VAL_TABLENAME);
+    	return $this;
     }
 
-    public function setField ($field=NULL)
+    public function where ($conditions)
     {
-        if ($field and $this->starChecker($field))
-        {
-            $field = trim(strip_tags($field));
-            array_push($this->fields, $field);
-            return true;
-        }
-        return false;
+    	if (is_string($conditions) and trim($conditions))
+    	{
+    		$this->query .= " $this->where ". trim($conditions);
+    		return $this;
+    	}
+    	array_push($this->errors, ERR_VAL_CONDITIONS);
+    	return $this;
     }
 
-    public function getFields ()
+    public function join($tableName, $conditions)
     {
-        return $this->fields;
+    	if ($tableName and is_string($tableName))
+    	{
+    		$this->query .= " $this->join " . trim($tableName);
+    	} else {
+    		array_push($this->errors, ERR_VAL_TABLENAME);
+    	}
+
+    	if (is_string($conditions))
+    	{
+    		$this->query .= " ON " . trim($conditions);
+    		return $this;
+    	}
+    	array_push($this->errors, ERR_VAL_CONDITIONS);
+    	return $this;
     }
 
-    public function clearFields ()
+    public function leftJoin($tableName, $conditions)
     {
-        $this->fields = [];
-        return true;
+    	if ($tableName and is_string($tableName))
+    	{
+    		$this->query .= " $this->leftJoin " . trim($tableName);
+    	} else {
+    		array_push($this->errors, ERR_VAL_TABLENAME);
+    	}
+
+    	if (is_string($conditions))
+    	{
+    		$this->query .= " ON " . trim($conditions);
+    		return $this;
+    	}
+    	array_push($this->errors, ERR_VAL_CONDITIONS);
+    	return $this;
     }
 
-    public function setTableName ($tableName=NULL)
+    public function rightJoin($tableName, $conditions)
     {
-        if ($tableName and $this->starChecker($tableName))
-        {
-            $tableName = trim(strip_tags($tableName));
-            $this->tableName = $tableName;
-            return true;
-        }
-        return false;
+    	if ($tableName and is_string($tableName))
+    	{
+    		$this->query .= " $this->rightJoin " . trim($tableName);
+    	} else {
+    		array_push($this->errors, ERR_VAL_TABLENAME);
+    	}
+
+    	if (is_string($conditions))
+    	{
+    		$this->query .= " ON " . trim($conditions);
+    		return $this;
+    	}
+    	array_push($this->errors, ERR_VAL_CONDITIONS);
+    	return $this;
     }
 
-    public function getQuery ()
+    public function crossJoin($tableName)
     {
-        return $this->query;
+    	if(is_string($tableName) and trim($tableName))
+    	{
+    		$this->query .= " $this->crossJoin " . trim($tableName);
+    		return $this;
+    	}
+    	array_push($this->errors, ERR_VAL_TABLENAME);
+    	return $this;
     }
 
-    protected function clearQuery ()
+    public function naturalJoin($tableName)
     {
-        $this->query = [];
+    	if(is_string($tableName) and trim($tableName))
+    	{
+    		$this->query .= " $this->naturalJoin " . trim($tableName);
+    		return $this;
+    	}
+    	array_push($this->errors, ERR_VAL_TABLENAME);
+    	return $this;
     }
 
-    public function getTableName ()
+    public function group($columns)
     {
-        return $this->tableName;
+    	$this->query .= " $this->group";
+
+    	if (is_string($columns))
+    	{
+    		$this->query .= " $columns";
+    		return $this;
+    	}
+
+    	if(is_array($columns))
+    	{
+    		foreach ($columns as $col) 
+    		{
+    			$this->query .= " " . trim($col) . ",";
+    		}
+    		$this->query = substr($this->query, 0, -1);
+    		return $this;
+    	}
+    	array_push($this->errors, ERR_VAL_COLUMNS);
+    	return $this;
     }
 
-    public function setCondition ($condition)
+    public function having ($conditions)
     {
-        if ($condition and $this->starChecker($condition))
-        {
-            $condition = trim(strip_tags($condition));
-            array_push($this->conditions, $condition);
-            return true;
-        }
-        return false;
+    	if (is_string($conditions) and trim($conditions))
+    	{
+    		$this->query .= " $this->having ". trim($conditions);
+    		return $this;
+    	}
+    	array_push($this->errors, ERR_VAL_CONDITIONS);
+    	return $this;
     }
 
-    public function getConditions ()
+    public function order($columns)
     {
-        return $this->conditions;
-    }
-    public function clearConditions () 
-    {
-        $this->conditions = [];
-        return true;
+    	$this->query .= " $this->order";
+
+    	if (is_string($columns))
+    	{
+    		$this->query .= " $columns";
+    		return $this;
+    	}
+
+    	if(is_array($columns))
+    	{
+    		foreach ($columns as $col) 
+    		{
+    			$this->query .= " " . trim($col) . ",";
+    		}
+    		$this->query = substr($this->query, 0, -1);
+    		return $this;
+    	}
+    	array_push($this->errors, ERR_VAL_COLUMNS);
+    	return $this;
     }
 
-    public function setValue ($value)
-    {
-        if ($value)
-        {
-            $value = trim(strip_tags($value));
-            array_push($this->values, "'$value'");
-            return true;
-        }
-        return false;
-    }
-
-    public function getValues ()
-    {
-        return $this->values;
-    }
-
-    public function clearValues ()
-    {
-        $this->values = [];
-        return true;
-    }
-
-    public function setLimit ($limit)
+    public function limit($limit)
     {
         if (is_numeric($limit))
         {
-            $this->limit = $limit;
-            return true;
+            $this->query = " $this->limit" . trim($limit);
+            return $this;
         }
-        return false;
+        array_push($this->errors, ERR_VAL_LIMIT);
+    	return $this;
     }
 
-    public function getLimit ()
+    public function insert($tableName, $columns, $values)
     {
-        return $this->limit;
+    	if(is_string($tableName) and trim($tableName))
+    	{
+    		$this->query .= " $this->insert " . trim($tableName);
+    	} else {
+    		array_push($this->errors, ERR_VAL_TABLENAME);
+    		return $this;
+    	}
+
+    	if (is_string($columns))
+    	{
+    		$this->query .= " ($columns) ";
+    	} elseif (is_array($columns)) 
+    	{ 
+    		$cols = implode(", ", $columns);
+    		$this->query .= " ($cols) ";
+    	} else {
+    		array_push($this->errors, ERR_VAL_COLUMNS);
+    		return $this;
+    	}
+
+    	if (is_string($values))
+    	{
+    		$this->query .= " ($values)";
+    	} elseif (is_array($values)) 
+    	{ 
+    		$vals = implode(", ", $values);
+    		$this->query .= "VALUES ($vals)";
+    	} else {
+    		array_push($this->errors, ERR_VAL_VALUES);
+    		return $this;
+    	}
+    	return $this;
     }
 
-    public function select()
+    public function delete($tableName, $conditions)
     {
-        $this->clearQuery ();
-        if ($this->fields)
-        {
-            $fields = implode(", ", $this->fields);
-            array_push($this->query, "SELECT $fields");
-        }
+    	if(is_string($tableName) and trim($tableName))
+    	{
+    		$this->query .= " $this->delete " . trim($tableName);
+    	} else {
+    		array_push($this->errors, ERR_VAL_TABLENAME);
+    		return $this;
+    	}
 
-        if ($this->tableName)
-        {
-            array_push($this->query, "FROM $this->tableName");
-        }
-
-        if ($this->conditions)
-        {
-            $conditions = implode(", ", $this->conditions);
-            array_push($this->query, "WHERE $conditions");
-        }
-
-        if ($this->limit)
-        {
-            array_push($this->query, "LIMIT $this->limit");
-        }
-
-        $this->query = implode(" ", $this->query);
+    	if (is_string($conditions) and trim($conditions))
+    	{
+    		$this->query .= " $this->where ". trim($conditions);
+    		return $this;
+    	}
+    	array_push($this->errors, ERR_VAL_CONDITIONS);
+    	return $this;
     }
 
-    public function insert()
+    public function update($tableName, $fields, $values, $conditions)
     {
-        $this->clearQuery ();
-        if ($this->tableName)
-        {
-            array_push($this->query, "INSERT INTO $this->tableName");
-        }
+    	if(is_string($tableName) and trim($tableName))
+    	{
+    		$this->query .= " $this->update " . trim($tableName);
+    	} else {
+    		array_push($this->errors, ERR_VAL_TABLENAME);
+    		return $this;
+    	}
 
-        if ($this->fields)
+    	if (is_array($fields) and is_array($values))
         {
-            $fields = implode(", ", $this->fields);
-            array_push($this->query, "($fields)");
-        }
-
-        if ($this->values)
-        {
-            $values = implode(", ", $this->values);
-            array_push($this->query, "VALUES ($values)");
-        }
-
-        $this->query = implode(" ", $this->query);
-    }
-
-    public function delete()
-    {
-        $this->clearQuery ();
-        if ($this->tableName)
-        {
-            array_push($this->query, "DELETE FROM $this->tableName");
-        }
-
-        if ($this->conditions)
-        {
-            $conditions = implode(", ", $this->conditions);
-            array_push($this->query, "WHERE $conditions");
-        }
-
-        $this->query = implode(" ", $this->query);
-    }
-
-    public function update()
-    {
-        $this->clearQuery ();
-        if ($this->tableName)
-        {
-            array_push($this->query, "UPDATE $this->tableName");
-        }
-        if ($this->fields and $this->values)
-        {
-            array_push($this->query, "SET");
-            $count = count($this->fields);
-            foreach ($this->fields as $key => $field) {
+            $this->query .= " SET ";
+            $count = count($fields);
+            foreach ($fields as $key => $field) {
                 if($key != $count-1)
                 {
-                    array_push($this->query, "$field = {$this->values[$key]},");
+                    $this->query .= "$field={$values[$key]}, ";
                 } else {
-                    array_push($this->query, "$field = {$this->values[$key]}");
+                    $this->query .= "$field={$values[$key]}";
                 }
             }
+        } else {
+        	array_push($this->errors, ERR_VAL_UPDATE);
+    		return $this;
         }
-        if ($this->conditions)
-        {
-            $conditions = implode(", ", $this->conditions);
-            array_push($this->query, "WHERE $conditions");
-        }
-        $this->query = implode(" ", $this->query);
+
+        if (is_string($conditions) and trim($conditions))
+    	{
+    		$this->query .= " $this->where ". trim($conditions);
+    		return $this;
+    	}
+    	array_push($this->errors, ERR_VAL_CONDITIONS);
+    	return $this;
     }
 }
